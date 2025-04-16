@@ -55,6 +55,7 @@ public class Main {
                 }
             }else{
                 System.out.println("❌"+REDCOLOR+" Invalid Choice!,Try Again"+RESETCOLOR);
+                System.out.println();
             }
         }
 
