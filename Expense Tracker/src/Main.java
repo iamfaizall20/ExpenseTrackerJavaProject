@@ -26,7 +26,7 @@ public class Main {
 
     static Scanner getInput = new Scanner(System.in);
     public static void main(String[] args) {
-
+        System.out.println("Pull Requested");
         while (true) {
             System.out.print(PURPLECOLOR);
             System.out.println("╔════════════════════════════════════════════╗");
