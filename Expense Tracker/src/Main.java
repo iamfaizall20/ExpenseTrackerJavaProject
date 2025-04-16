@@ -22,7 +22,7 @@ public class Main {
     public static final String GREENCOLOR = "\033[32m";
     public static final String PURPLECOLOR = "\033[35m";
 
-    ArrayList<Expense> Expenselist = new ArrayList<>();
+    Expense[] expenselist = new Expense[150];
 
     static Scanner getInput = new Scanner(System.in);
     public static void main(String[] args) {
