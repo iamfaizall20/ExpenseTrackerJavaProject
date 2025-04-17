@@ -103,7 +103,7 @@ public class Main {
         for (int i = 0; i < expenselist.length; i++) {
             if (expenselist[i] != null) {
                 Expense exp = expenselist[i];
-                System.out.printf("%-8d $%-9.2f %-20s %-15s %-15s%n",
+                System.out.printf("%-8d 1%-9.2f %-20s %-15s %-15s%n",
                         i+1, exp.Amount, exp.Description, exp.Category, exp.Date);
                 hasExpenses = true;
             }
@@ -119,7 +119,7 @@ public class Main {
 
         for (int i = 0; i < expenselist.length; i++) {
             if (expenselist[i] != null) {
-                System.out.println(i + ". " + expenselist[i].Description + " - $" + expenselist[i].Amount);
+                System.out.println(i + ". " + expenselist[i].Description + " - " + expenselist[i].Amount);
                 found = true;
             }
         }
@@ -153,6 +153,18 @@ public class Main {
     }
 
     private static void TotalExpense() {
+        double total = 0;
+
+        for (Expense exp : expenselist){
+            if (exp != null){
+                total += exp.Amount;
+            }
+        }
+        System.out.println(PURPLECOLOR + "\n╔═══════════════════════════════╗");
+        System.out.println("║        TOTAL EXPENSES         ║");
+        System.out.println("╚═══════════════════════════════╝" + RESETCOLOR);
+        System.out.printf(GREENCOLOR + "💰 Total: %.2f\n" + RESETCOLOR, total);
+
     }
     //Comment
 
