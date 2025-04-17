@@ -21,9 +21,11 @@ public class Main {
     public static final String RESETCOLOR = "\033[0m";
     public static final String GREENCOLOR = "\033[32m";
     public static final String PURPLECOLOR = "\033[35m";
+    public static final String BLUECOLOR = "\033[34m";
 
-    Expense[] expenselist = new Expense[150];
-    //Danish ALI kANGO
+    static Expense[] expenselist = new Expense[150];
+
+
     static Scanner getInput = new Scanner(System.in);
     public static void main(String[] args) {
         System.out.println("Pull Requested");
@@ -63,12 +65,79 @@ public class Main {
     }
 
     private static void AddExpense() {
+        for (int i = 0; i < expenselist.length; i++){
+          if (expenselist[i] == null){
+              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Amount: ");
+              double amount = getInput.nextDouble();
+              getInput.nextLine();
+
+              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Description: ");
+              String description = getInput.nextLine();
+
+              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Category: ");
+              String category = getInput.nextLine();
+
+              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Date (dd-mm-yyyy): ");
+              String date = getInput.nextLine();
+
+              expenselist[i] = new Expense(amount, description, category, date);
+
+              System.out.println(GREENCOLOR + "Expense Added Successfully!" + RESETCOLOR);
+              return;
+          }
+        }
+        System.out.println("Expense list is full");
     }
 
     private static void ViewAllExpenses() {
+        boolean hasExpenses = false;
+
+        System.out.println(PURPLECOLOR + "\n╔═══════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                         All Recorded Expenses                         ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════════════╝" + RESETCOLOR);
+
+        System.out.printf("%-8s %-10s %-20s %-15s %-15s%n",
+                GREENCOLOR + "S. No", "   Amount", "   Description", "   Category", "   1Date" + RESETCOLOR);
+        System.out.println("------------------------------------------------------------------------");
+
+        for (int i = 0; i < expenselist.length; i++) {
+            if (expenselist[i] != null) {
+                Expense exp = expenselist[i];
+                System.out.printf("%-8d $%-9.2f %-20s %-15s %-15s%n",
+                        i+1, exp.Amount, exp.Description, exp.Category, exp.Date);
+                hasExpenses = true;
+            }
+        }
+
+        if (!hasExpenses) {
+            System.out.println(REDCOLOR + "No expenses to show!" + RESETCOLOR);
+        }
     }
 
     private static void DeleteExpense() {
+        boolean found = false;
+
+        for (int i = 0; i < expenselist.length; i++) {
+            if (expenselist[i] != null) {
+                System.out.println(i + ". " + expenselist[i].Description + " - $" + expenselist[i].Amount);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println(REDCOLOR + "No expenses to delete." + RESETCOLOR);
+            return;
+        }
+
+        System.out.print("Enter the index number to delete: ");
+        int index = getInput.nextInt();
+
+        if (index >= 0 && index < expenselist.length && expenselist[index] != null) {
+            expenselist[index] = null;
+            System.out.println(GREENCOLOR + "Expense deleted successfully!" + RESETCOLOR);
+        } else {
+            System.out.println(REDCOLOR + "Invalid index or empty slot!" + RESETCOLOR);
+        }
     }
 
     private static void ClearAllExpenses() {
