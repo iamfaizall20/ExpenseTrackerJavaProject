@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Expense{
@@ -23,12 +23,11 @@ public class Main {
     public static final String PURPLECOLOR = "\033[35m";
     public static final String BLUECOLOR = "\033[34m";
 
+    static Scanner getInput = new Scanner(System.in);
+
     static Expense[] expenselist = new Expense[150];
 
-
-    static Scanner getInput = new Scanner(System.in);
     public static void main(String[] args) {
-        System.out.println("Pull Requested");
         while (true) {
             System.out.print(PURPLECOLOR);
             System.out.println("╔════════════════════════════════════════════╗");
@@ -61,16 +60,25 @@ public class Main {
                 System.out.println("❌"+REDCOLOR+" Invalid Choice!,Try Again"+RESETCOLOR);
             }
         }
-
     }
 
     private static void AddExpense() {
         for (int i = 0; i < expenselist.length; i++){
           if (expenselist[i] == null){
-              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Amount: ");
-              double amount = getInput.nextDouble();
-              getInput.nextLine();
+              double amount = 0.0;
+              boolean validInput = false;
 
+              while (!validInput) {
+                  System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Amount: ");
+                  try {
+                      amount = getInput.nextDouble();
+                      getInput.nextLine();
+                      validInput = true;
+                  } catch (InputMismatchException e) {
+                      System.out.println(REDCOLOR + "Invalid input! Please enter a number." + RESETCOLOR);
+                      getInput.nextLine();
+                  }
+              }
               System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Description: ");
               String description = getInput.nextLine();
 
@@ -82,7 +90,7 @@ public class Main {
 
               expenselist[i] = new Expense(amount, description, category, date);
 
-              System.out.println(GREENCOLOR + "Expense Added Successfully!" + RESETCOLOR);
+              System.out.println(GREENCOLOR + "\nExpense Added Successfully!" + RESETCOLOR);
               return;
           }
         }
@@ -90,30 +98,35 @@ public class Main {
     }
 
     private static void ViewAllExpenses() {
-        boolean hasExpenses = false;
 
-        System.out.println(PURPLECOLOR + "\n╔═══════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                         All Recorded Expenses                         ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════════╝" + RESETCOLOR);
+        System.out.println(PURPLECOLOR);
+        System.out.println("╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║                   All Recorded Expenses                    ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝" + RESETCOLOR);
 
-        System.out.printf("%-8s %-10s %-20s %-15s %-15s%n",
-                GREENCOLOR + "S. No", "   Amount", "   Description", "   Category", "   1Date" + RESETCOLOR);
-        System.out.println("------------------------------------------------------------------------");
+        if (expenselist[0] == null) {
+            System.out.println(REDCOLOR + "No expenses to show!" + RESETCOLOR);
+            return;
+        }
+
+        System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
+        System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
+                "No", "Amount", "Description", "Category", "Date");
+        System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
 
         for (int i = 0; i < expenselist.length; i++) {
             if (expenselist[i] != null) {
-                Expense exp = expenselist[i];
-                System.out.printf("%-8d 1%-9.2f %-20s %-15s %-15s%n",
-                        i+1, exp.Amount, exp.Description, exp.Category, exp.Date);
-                hasExpenses = true;
+                System.out.printf("║ %-4d ║ %-8.2f ║ %-16s ║ %-8s ║ %-10s ║%n",
+                        i + 1,
+                        expenselist[i].Amount,
+                        expenselist[i].Description,
+                        expenselist[i].Category,
+                        expenselist[i].Date);
             }
         }
 
-        if (!hasExpenses) {
-            System.out.println(REDCOLOR + "No expenses to show!" + RESETCOLOR);
-        }
+        System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
     }
-
     private static void DeleteExpense() {
         boolean found = false;
 
