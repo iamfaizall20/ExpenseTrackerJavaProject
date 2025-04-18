@@ -146,7 +146,10 @@ public class Main {
         int index = getInput.nextInt();
 
         if (index >= 0 && index < expenselist.length && expenselist[index] != null) {
-            expenselist[index] = null;
+            for (int i = index; i< expenselist.length - 1; i++){
+                expenselist[i] = expenselist[i + 1];
+            }
+            expenselist[expenselist.length - 1] = null;
             System.out.println(GREENCOLOR + "Expense deleted successfully!" + RESETCOLOR);
         } else {
             System.out.println(REDCOLOR + "Invalid index or empty slot!" + RESETCOLOR);
@@ -154,6 +157,10 @@ public class Main {
     }
 
     private static void ClearAllExpenses() {
+        for (int i = 0; i < expenselist.length; i++){
+            expenselist[i] = null;
+        }
+        System.out.println(REDCOLOR + "\nAll Expenses have been cleared!" + RESETCOLOR);
     }
 
     private static void FilterByCategory() {
@@ -168,8 +175,8 @@ public class Main {
     private static void TotalExpense() {
         double total = 0;
 
-        for (Expense exp : expenselist){
-            if (exp != null){
+        for (Expense exp : expenselist) {
+            if (exp != null) {
                 total += exp.Amount;
             }
         }
@@ -180,7 +187,7 @@ public class Main {
 
     }
     //Comment
-
+    //Rajiv Sachdev
 }
 
 
