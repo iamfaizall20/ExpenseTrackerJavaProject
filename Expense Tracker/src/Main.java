@@ -168,8 +168,8 @@ public class Main {
     private static void TotalExpense() {
         double total = 0;
 
-        for (Expense exp : expenselist){
-            if (exp != null){
+        for (Expense exp : expenselist) {
+            if (exp != null) {
                 total += exp.Amount;
             }
         }
@@ -180,7 +180,7 @@ public class Main {
 
     }
     //Comment
-
+    //Rajiv Sachdev
 }
 
 
