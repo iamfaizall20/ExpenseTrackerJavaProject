@@ -2,12 +2,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Expense{
-    double Amount;
+    int Amount;
     String Description;
     String Category;
     String Date;
 
-    public Expense(double amount, String description, String category, String date) {
+    public Expense(int amount, String description, String category, String date) {
         Amount = amount;
         Description = description;
         Category = category;
@@ -63,15 +63,16 @@ public class Main {
     }
 
     private static void AddExpense() {
+        System.out.println("ADD EXPENSE - ENTER DETAILS ⤶");
         for (int i = 0; i < expenselist.length; i++){
           if (expenselist[i] == null){
-              double amount = 0.0;
+              int amount = 0;
               boolean validInput = false;
 
               while (!validInput) {
                   System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Amount: ");
                   try {
-                      amount = getInput.nextDouble();
+                      amount = getInput.nextInt();
                       getInput.nextLine();
                       validInput = true;
                   } catch (InputMismatchException e) {
@@ -116,7 +117,7 @@ public class Main {
 
         for (int i = 0; i < expenselist.length; i++) {
             if (expenselist[i] != null) {
-                System.out.printf("║ %-4d ║ %-8.2f ║ %-16s ║ %-8s ║ %-10s ║%n",
+                System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
                         i + 1,
                         expenselist[i].Amount,
                         expenselist[i].Description,
@@ -128,25 +129,25 @@ public class Main {
         System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
     }
     private static void DeleteExpense() {
-        boolean found = false;
 
-        for (int i = 0; i < expenselist.length; i++) {
-            if (expenselist[i] != null) {
-                System.out.println(i + ". " + expenselist[i].Description + " - " + expenselist[i].Amount);
-                found = true;
-            }
-        }
+        System.out.println("DELETE EXPENSES - ENTER S/NO ⤶");
 
-        if (!found) {
+        if(expenselist.length == 0){
             System.out.println(REDCOLOR + "No expenses to delete." + RESETCOLOR);
             return;
         }
 
-        System.out.print("Enter the index number to delete: ");
-        int index = getInput.nextInt();
+        for (int i = 0; i < expenselist.length; i++) {
+            if (expenselist[i] != null) {
+                System.out.println((i+1) + ". " + expenselist[i].Description + " - " + expenselist[i].Amount);
+            }
+        }
 
-        if (index >= 0 && index < expenselist.length && expenselist[index] != null) {
-            for (int i = index; i< expenselist.length - 1; i++){
+        System.out.print(PURPLECOLOR + "(→) " + RESETCOLOR);
+        int SNo = getInput.nextInt();
+
+        if (SNo >= 0 && SNo < expenselist.length && expenselist[SNo] != null) {
+            for (int i = SNo; i< expenselist.length - 1; i++){
                 expenselist[i] = expenselist[i + 1];
             }
             expenselist[expenselist.length - 1] = null;
@@ -162,7 +163,6 @@ public class Main {
         }
         System.out.println(REDCOLOR + "\nAll Expenses have been cleared!" + RESETCOLOR);
     }
-
     private static void FilterByCategory() {
     }
 
@@ -173,23 +173,22 @@ public class Main {
     }
 
     private static void TotalExpense() {
-        double total = 0;
+        int total = 0;
 
-        for (Expense exp : expenselist) {
-            if (exp != null) {
-                total += exp.Amount;
-            }
-        }
-        System.out.println(PURPLECOLOR + "\n╔═══════════════════════════════╗");
+        System.out.println(PURPLECOLOR);
+        System.out.println("╔═══════════════════════════════╗");
         System.out.println("║        TOTAL EXPENSES         ║");
         System.out.println("╚═══════════════════════════════╝" + RESETCOLOR);
-        System.out.printf(GREENCOLOR + "💰 Total: %.2f\n" + RESETCOLOR, total);
 
+        if (expenselist.length == 0){
+            System.out.println("No Expenses recorded.");
+        }else{
+        for (Expense expense : expenselist) {
+            if(expense != null) {
+                total += expense.Amount;
+            }
+        }
+        System.out.println(GREENCOLOR + "💰 Total: " + RESETCOLOR + total);
+        }
     }
-    //Comment
-    //Rajiv Sachdev
 }
-
-
-
-
