@@ -146,7 +146,10 @@ public class Main {
         int index = getInput.nextInt();
 
         if (index >= 0 && index < expenselist.length && expenselist[index] != null) {
-            expenselist[index] = null;
+            for (int i = index; i< expenselist.length - 1; i++){
+                expenselist[i] = expenselist[i + 1];
+            }
+            expenselist[expenselist.length - 1] = null;
             System.out.println(GREENCOLOR + "Expense deleted successfully!" + RESETCOLOR);
         } else {
             System.out.println(REDCOLOR + "Invalid index or empty slot!" + RESETCOLOR);
