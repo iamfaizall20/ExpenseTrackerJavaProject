@@ -157,6 +157,10 @@ public class Main {
     }
 
     private static void ClearAllExpenses() {
+        for (int i = 0; i < expenselist.length; i++){
+            expenselist[i] = null;
+        }
+        System.out.println(REDCOLOR + "\nAll Expenses have been cleared!" + RESETCOLOR);
     }
 
     private static void FilterByCategory() {
