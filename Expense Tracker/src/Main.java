@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 class Expense{
@@ -29,7 +30,7 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
-                clearConsole();
+            clearConsole();
             System.out.print(PURPLECOLOR);
             System.out.println("╔════════════════════════════════════════════╗");
             System.out.println("║            ~ EXPENSE TRACKER ~             ║");
@@ -40,28 +41,47 @@ public class Main {
             System.out.printf("%-24s%-23s%n", "3.🗑️ Delete Expense", "4.🧹 Clear All Expenses");
             System.out.printf("%-23s%-23s%n", "5.📅 Filter By Date", "6.🔍 Filter By Category");
             System.out.printf("%-23s%-23s%n", "7.📋 View Summary  ", "8.💰 Show Total Expenses");
-            System.out.printf("%-23s%n","9.❌ Exit");
+            System.out.printf("%-23s%n", "9.❌ Exit");
             System.out.print(PURPLECOLOR + "(→) " + RESETCOLOR);
 
             int choice = getInput.nextInt();
 
-            if(choice >= 1 && choice <= 9){
-                switch (choice){
-                    case 1: AddExpense(); break;
-                    case 2: ViewAllExpenses(); break;
-                    case 3: DeleteExpense(); break;
-                    case 4: ClearAllExpenses(); break;
-                    case 5: FilterByDate(); break;
-                    case 6: FilterByCategory(); break;
-                    case 7: ViewSummary(); break;
-                    case 8: TotalExpense(); break;
-                    case 9: System.out.println("😊 Thanks for using EXPENSE TRACKER"); return;
+            if (choice >= 1 && choice <= 9) {
+                switch (choice) {
+                    case 1:
+                        AddExpense();
+                        break;
+                    case 2:
+                        ViewAllExpenses();
+                        break;
+                    case 3:
+                        DeleteExpense();
+                        break;
+                    case 4:
+                        ClearAllExpenses();
+                        break;
+                    case 5:
+                        FilterByDate();
+                        break;
+                    case 6:
+                        FilterByCategory();
+                        break;
+                    case 7:
+                        ViewSummary();
+                        break;
+                    case 8:
+                        TotalExpense();
+                        break;
+                    case 9:
+                        System.out.println("😊 Thanks for using EXPENSE TRACKER");
+                        return;
                 }
-            }else{
-                System.out.println("❌"+REDCOLOR+" Invalid Choice!,Try Again"+RESETCOLOR);
+            } else {
+                System.out.println("❌" + REDCOLOR + " Invalid Choice!,Try Again" + RESETCOLOR);
             }
         }
     }
+
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -69,36 +89,36 @@ public class Main {
 
     private static void AddExpense() {
         System.out.println("ADD EXPENSE - ENTER DETAILS ⤶");
-        for (int i = 0; i < expenselist.length; i++){
-          if (expenselist[i] == null){
-              int amount = 0;
-              boolean validInput = false;
+        for (int i = 0; i < expenselist.length; i++) {
+            if (expenselist[i] == null) {
+                int amount = 0;
+                boolean validInput = false;
 
-              while (!validInput) {
-                  System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Amount: ");
-                  try {
-                      amount = getInput.nextInt();
-                      getInput.nextLine();
-                      validInput = true;
-                  } catch (InputMismatchException e) {
-                      System.out.println(REDCOLOR + "Invalid input! Please enter a number." + RESETCOLOR);
-                      getInput.nextLine();
-                  }
-              }
-              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Description: ");
-              String description = getInput.nextLine();
+                while (!validInput) {
+                    System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Amount: ");
+                    try {
+                        amount = getInput.nextInt();
+                        getInput.nextLine();
+                        validInput = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println(REDCOLOR + "Invalid input! Please enter a number." + RESETCOLOR);
+                        getInput.nextLine();
+                    }
+                }
+                System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Description: ");
+                String description = getInput.nextLine();
 
-              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Category: ");
-              String category = getInput.nextLine();
+                System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Category: ");
+                String category = getInput.nextLine();
 
-              System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Date (dd-mm-yyyy): ");
-              String date = getInput.nextLine();
+                System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Date (dd-mm-yyyy): ");
+                String date = getInput.nextLine();
 
-              expenselist[i] = new Expense(amount, description, category, date);
+                expenselist[i] = new Expense(amount, description, category, date);
 
-              System.out.println(GREENCOLOR + "\nExpense Added Successfully!" + RESETCOLOR);
-              return;
-          }
+                System.out.println(GREENCOLOR + "\nExpense Added Successfully!" + RESETCOLOR);
+                return;
+            }
         }
         System.out.println("Expense list is full");
     }
@@ -133,10 +153,11 @@ public class Main {
 
         System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
     }
+
     private static void DeleteExpense() {
 
 
-        if(expenselist[0] == null){
+        if (expenselist[0] == null) {
             System.out.println(REDCOLOR + "No expenses to delete." + RESETCOLOR);
             return;
         }
@@ -144,7 +165,7 @@ public class Main {
 
         for (int i = 0; i < expenselist.length; i++) {
             if (expenselist[i] != null) {
-                System.out.println((i+1) + ". " + expenselist[i].Description + " - " + expenselist[i].Amount);
+                System.out.println((i + 1) + ". " + expenselist[i].Description + " - " + expenselist[i].Amount);
             }
         }
 
@@ -152,7 +173,7 @@ public class Main {
         int SNo = getInput.nextInt();
 
         if (SNo >= 0 && SNo < expenselist.length && expenselist[SNo] != null) {
-            for (int i = SNo; i< expenselist.length - 1; i++){
+            for (int i = SNo; i < expenselist.length - 1; i++) {
                 expenselist[i] = expenselist[i + 1];
             }
             expenselist[expenselist.length - 1] = null;
@@ -163,49 +184,90 @@ public class Main {
     }
 
     private static void ClearAllExpenses() {
-        for (int i = 0; i < expenselist.length; i++){
+        for (int i = 0; i < expenselist.length; i++) {
             expenselist[i] = null;
         }
         System.out.println(REDCOLOR + "\nAll Expenses have been cleared!" + RESETCOLOR);
     }
+
     private static void FilterByCategory() {
 
-        if(expenselist[0] != null){
+        if (expenselist[0] != null) {
 
-        System.out.println(PURPLECOLOR + "CATEGORIES - " + RESETCOLOR + " ENTER YOUR CHOICE ⤶");
+            System.out.println(PURPLECOLOR + "CATEGORIES - " + RESETCOLOR + " ENTER YOUR CHOICE ⤶");
             for (Expense expense : expenselist) {
                 if (expense != null)
                     System.out.println(BLUECOLOR + "→ " + RESETCOLOR + expense.Category);
             }
-        getInput.nextLine();
-        String Choice = getInput.nextLine();
+            getInput.nextLine();
+            String Choice = getInput.nextLine();
 
-        System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
-        System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
-                "No", "Amount", "Description", "Category", "Date");
-        System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
+            System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
+            System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
+                    "No", "Amount", "Description", "Category", "Date");
+            System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
 
-        for (int i = 0; i < expenselist.length; i++) {
-            if (expenselist[i] != null && Choice.equalsIgnoreCase(expenselist[i].Category)) {
-                System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
-                        (i + 1),
-                        expenselist[i].Amount,
-                        expenselist[i].Description,
-                        expenselist[i].Category,
-                        expenselist[i].Date);
-                    }
+            for (int i = 0; i < expenselist.length; i++) {
+                if (expenselist[i] != null && Choice.equalsIgnoreCase(expenselist[i].Category)) {
+                    System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
+                            (i + 1),
+                            expenselist[i].Amount,
+                            expenselist[i].Description,
+                            expenselist[i].Category,
+                            expenselist[i].Date);
                 }
+            }
             System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
-        }else{
-            System.out.println(REDCOLOR + "List is Empty,Enter some Expenses first"+RESETCOLOR);
+        } else {
+            System.out.println(REDCOLOR + "List is Empty,Enter some Expenses first" + RESETCOLOR);
         }
     }
+
     private static void FilterByDate() {
     }
 
     private static void ViewSummary() {
-    }
+        String[] CategoryList = new String[50];
+        int[] AmountList = new int[50];
 
+        if (expenselist != null && expenselist[0] != null) {
+            for (Expense e : expenselist) {
+                if (e == null) continue;
+
+                String Category = e.Category;
+                int Amount = e.Amount;
+
+                boolean categoryFound = false;
+
+                for (int j = 0; j < CategoryList.length; j++) {
+                    if (CategoryList[j] == null) break;
+                    if (CategoryList[j].equalsIgnoreCase(Category)) {
+                        AmountList[j] += Amount;
+                        categoryFound = true;
+                        break;
+                    }
+                }
+
+                if (!categoryFound) {
+                    for (int j = 0; j < CategoryList.length; j++) {
+                        if (CategoryList[j] == null) {
+                            CategoryList[j] = Category;
+                            AmountList[j] = Amount;
+                            break;
+                        }
+                    }
+                }
+            }
+
+        System.out.println(PURPLECOLOR + "SUMMARY ⤶" + RESETCOLOR);
+            for (int k = 0; k < CategoryList.length; k++) {
+                if (CategoryList[k] != null) {
+                    System.out.println(GREENCOLOR + CategoryList[k] + RESETCOLOR + " - "+
+                            BLUECOLOR + AmountList[k] + RESETCOLOR);
+                }
+            }
+        }
+    }
     private static void TotalExpense() {
         int total = 0;
 
