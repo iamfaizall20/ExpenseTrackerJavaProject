@@ -224,14 +224,14 @@ public class Main {
 
     private static void FilterByDate() {
         getInput.nextLine();
-        System.out.print(BLUECOLOR + RESETCOLOR + " Enter Date (dd-mm-yyyy) to filter: ");
+        System.out.print(BLUECOLOR + "Enter Date (dd-mm-yyyy) to filter: "+ RESETCOLOR );
         String dateInput = getInput.nextLine();
 
         int num = 0;
         boolean found = false;
 
-        for (int i = 0; i < expenselist.length; i++) {
-            if (expenselist[i] != null && expenselist[i].Date.equals(dateInput)) {
+        for (Expense value : expenselist) {
+            if (value != null && value.Date.equals(dateInput)) {
                 found = true;
                 break;
             }
@@ -250,56 +250,15 @@ public class Main {
                     "No", "Amount", "Description", "Category", "Date");
             System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
 
-            for (int i = 0; i < expenselist.length; i++) {
-                if (expenselist[i] != null && expenselist[i].Date.equals(dateInput)) {
+            for (Expense expense : expenselist) {
+                if (expense != null && expense.Date.equals(dateInput)) {
                     num++;
-                    System.out.printf("║ %-4d ║ %-8.2f ║ %-16s ║ %-8s ║ %-10s ║%n",
-                            num,
-                            expenselist[i].Amount,
-                            expenselist[i].Description,
-                            expenselist[i].Category,
-                            expenselist[i].Date);
-                }
-            }
-
-            System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
-        }
-        getInput.nextLine();
-        System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Enter Date (dd-mm-yyyy) to filter: ");
-        String inputDate = getInput.nextLine();
-
-        int count = 0;
-        boolean founded = false;
-
-        for (int i = 0; i < expenselist.length; i++) {
-            if (expenselist[i] != null && expenselist[i].Date.equals(inputDate)) {
-                founded = true;
-                break;
-            }
-        }
-
-        if (!founded) {
-            System.out.println(REDCOLOR + "No expenses found on " + inputDate + RESETCOLOR);
-        } else {
-            System.out.println(PURPLECOLOR);
-            System.out.println("╔════════════════════════════════════════════════════════════╗");
-            System.out.printf("║                  Expenses On " + inputDate + "                    ║");
-            System.out.println("\n╚════════════════════════════════════════════════════════════╝" + RESETCOLOR);
-
-            System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
-            System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
-                    "No", "Amount", "Description", "Category", "Date");
-            System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
-
-            for (int i = 0; i < expenselist.length; i++) {
-                if (expenselist[i] != null && expenselist[i].Date.equals(inputDate)) {
-                    count++;
                     System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
-                            count,
-                            expenselist[i].Amount,
-                            expenselist[i].Description,
-                            expenselist[i].Category,
-                            expenselist[i].Date);
+                            num,
+                            expense.Amount,
+                            expense.Description,
+                            expense.Category,
+                            expense.Date);
                 }
             }
             System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
