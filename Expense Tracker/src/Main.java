@@ -264,6 +264,46 @@ public class Main {
 
             System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
         }
+        getInput.nextLine();
+        System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Enter Date (dd-mm-yyyy) to filter: ");
+        String inputDate = getInput.nextLine();
+
+        int count = 0;
+        boolean founded = false;
+
+        for (int i = 0; i < expenselist.length; i++) {
+            if (expenselist[i] != null && expenselist[i].Date.equals(inputDate)) {
+                founded = true;
+                break;
+            }
+        }
+
+        if (!founded) {
+            System.out.println(REDCOLOR + "No expenses found on " + inputDate + RESETCOLOR);
+        } else {
+            System.out.println(PURPLECOLOR);
+            System.out.println("╔════════════════════════════════════════════════════════════╗");
+            System.out.printf("║                  Expenses On " + inputDate + "                    ║");
+            System.out.println("\n╚════════════════════════════════════════════════════════════╝" + RESETCOLOR);
+
+            System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
+            System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
+                    "No", "Amount", "Description", "Category", "Date");
+            System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
+
+            for (int i = 0; i < expenselist.length; i++) {
+                if (expenselist[i] != null && expenselist[i].Date.equals(inputDate)) {
+                    count++;
+                    System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
+                            count,
+                            expenselist[i].Amount,
+                            expenselist[i].Description,
+                            expenselist[i].Category,
+                            expenselist[i].Date);
+                }
+            }
+            System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
+        }
     }
 
     private static void ViewSummary() {
