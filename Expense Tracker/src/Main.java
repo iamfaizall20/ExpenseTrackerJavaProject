@@ -29,6 +29,7 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
+                clearConsole();
             System.out.print(PURPLECOLOR);
             System.out.println("╔════════════════════════════════════════════╗");
             System.out.println("║            ~ EXPENSE TRACKER ~             ║");
@@ -50,8 +51,8 @@ public class Main {
                     case 2: ViewAllExpenses(); break;
                     case 3: DeleteExpense(); break;
                     case 4: ClearAllExpenses(); break;
-                    case 5: FilterByCategory(); break;
-                    case 6: FilterByDate(); break;
+                    case 5: FilterByDate(); break;
+                    case 6: FilterByCategory(); break;
                     case 7: ViewSummary(); break;
                     case 8: TotalExpense(); break;
                     case 9: System.out.println("😊 Thanks for using EXPENSE TRACKER"); return;
@@ -60,6 +61,10 @@ public class Main {
                 System.out.println("❌"+REDCOLOR+" Invalid Choice!,Try Again"+RESETCOLOR);
             }
         }
+    }
+    public static void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     private static void AddExpense() {
@@ -130,12 +135,12 @@ public class Main {
     }
     private static void DeleteExpense() {
 
-        System.out.println("DELETE EXPENSES - ENTER S/NO ⤶");
 
-        if(expenselist.length == 0){
+        if(expenselist[0] == null){
             System.out.println(REDCOLOR + "No expenses to delete." + RESETCOLOR);
             return;
         }
+        System.out.println("DELETE EXPENSES - ENTER S/NO ⤶");
 
         for (int i = 0; i < expenselist.length; i++) {
             if (expenselist[i] != null) {
@@ -164,8 +169,37 @@ public class Main {
         System.out.println(REDCOLOR + "\nAll Expenses have been cleared!" + RESETCOLOR);
     }
     private static void FilterByCategory() {
-    }
 
+        if(expenselist[0] != null){
+
+        System.out.println(PURPLECOLOR + "CATEGORIES - " + RESETCOLOR + " ENTER YOUR CHOICE ⤶");
+            for (Expense expense : expenselist) {
+                if (expense != null)
+                    System.out.println(BLUECOLOR + "→ " + RESETCOLOR + expense.Category);
+            }
+        getInput.nextLine();
+        String Choice = getInput.nextLine();
+
+        System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
+        System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
+                "No", "Amount", "Description", "Category", "Date");
+        System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
+
+        for (int i = 0; i < expenselist.length; i++) {
+            if (expenselist[i] != null && Choice.equalsIgnoreCase(expenselist[i].Category)) {
+                System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
+                        (i + 1),
+                        expenselist[i].Amount,
+                        expenselist[i].Description,
+                        expenselist[i].Category,
+                        expenselist[i].Date);
+                    }
+                }
+            System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
+        }else{
+            System.out.println(REDCOLOR + "List is Empty,Enter some Expenses first"+RESETCOLOR);
+        }
+    }
     private static void FilterByDate() {
     }
 
@@ -180,15 +214,16 @@ public class Main {
         System.out.println("║        TOTAL EXPENSES         ║");
         System.out.println("╚═══════════════════════════════╝" + RESETCOLOR);
 
-        if (expenselist.length == 0){
+        if (expenselist[0] == null){
             System.out.println("No Expenses recorded.");
-        }else{
+            return;
+        }
+
         for (Expense expense : expenselist) {
             if(expense != null) {
                 total += expense.Amount;
             }
         }
         System.out.println(GREENCOLOR + "💰 Total: " + RESETCOLOR + total);
-        }
     }
 }
