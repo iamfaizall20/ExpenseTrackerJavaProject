@@ -224,7 +224,7 @@ public class Main {
 
     private static void FilterByDate() {
         getInput.nextLine();
-        System.out.print(BLUECOLOR + RESETCOLOR + " ENTER YOUR CHOICE ⤶ ");
+        System.out.print(BLUECOLOR + RESETCOLOR + " Enter Date (dd-mm-yyyy) to filter: ");
         String dateInput = getInput.nextLine();
 
         int num = 0;
