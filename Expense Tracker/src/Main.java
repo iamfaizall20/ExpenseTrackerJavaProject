@@ -37,7 +37,7 @@ public class Main {
             System.out.println(GREENCOLOR + "☰ " + "MENU" + RESETCOLOR + " - ENTER YOUR CHOICE");
             System.out.printf("%-22s%-22s%n", "1.➕ Add Expense", "2.📋 View All Expenses");
             System.out.printf("%-24s%-23s%n", "3.🗑️ Delete Expense", "4.🧹 Clear All Expenses");
-            System.out.printf("%-23s%-23s%n", "5.📅 Filter By Date", "6.🔍 Filter By Category");
+            System.out.printf("%-23s%-23s%n", "5.🔍 Filter By Category ", "6.📅 Filter By Date");
             System.out.printf("%-23s%-23s%n", "7.📋 View Summary  ", "8.💰 Show Total Expenses");
             System.out.printf("%-23s%n","9.❌ Exit");
             System.out.print(PURPLECOLOR + "(→) " + RESETCOLOR);
@@ -167,6 +167,47 @@ public class Main {
     }
 
     private static void FilterByDate() {
+        getInput.nextLine();
+        System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Enter Date (dd-mm-yyyy) to filter: ");
+        String dateInput = getInput.nextLine();
+
+        int num = 0;
+        boolean found = false;
+
+        for (int i = 0; i < expenselist.length; i++) {
+            if (expenselist[i] != null && expenselist[i].Date.equals(dateInput)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println(REDCOLOR + "No expenses found on " + dateInput + RESETCOLOR);
+        } else {
+            System.out.println(PURPLECOLOR);
+            System.out.println("╔════════════════════════════════════════════════════════════╗");
+            System.out.printf("║                  Expenses On " + dateInput + "                    ║");
+            System.out.println("\n╚════════════════════════════════════════════════════════════╝" + RESETCOLOR);
+
+            System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
+            System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
+                    "No", "Amount", "Description", "Category", "Date");
+            System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
+
+            for (int i = 0; i < expenselist.length; i++) {
+                if (expenselist[i] != null && expenselist[i].Date.equals(dateInput)) {
+                    num++;
+                    System.out.printf("║ %-4d ║ %-8.2f ║ %-16s ║ %-8s ║ %-10s ║%n",
+                            num,
+                            expenselist[i].Amount,
+                            expenselist[i].Description,
+                            expenselist[i].Category,
+                            expenselist[i].Date);
+                }
+            }
+
+            System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
+        }
     }
 
     private static void ViewSummary() {
@@ -186,8 +227,6 @@ public class Main {
         System.out.printf(GREENCOLOR + "💰 Total: %.2f\n" + RESETCOLOR, total);
 
     }
-    //Comment
-    //Rajiv Sachdev
 }
 
 
