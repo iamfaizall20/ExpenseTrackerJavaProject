@@ -191,79 +191,65 @@ public class Main {
 
     private static void FilterByCategory() {
 
-        if (expenselist[0] != null) {
+        if (expenselist != null && expenselist[0] != null) {
 
             System.out.println(PURPLECOLOR + "CATEGORIES - " + RESETCOLOR + " ENTER YOUR CHOICE ⤶");
+
+            String[] uniqueCategories = new String[50];
+            int catIndex = 0;
+
             for (Expense expense : expenselist) {
-                if (expense != null)
-                    System.out.println(BLUECOLOR + "→ " + RESETCOLOR + expense.Category);
+                if (expense == null) continue;
+
+                String cat = expense.Category.trim();
+                boolean alreadyExists = false;
+
+                for (int i = 0; i < catIndex; i++) {
+                    if (uniqueCategories[i].equalsIgnoreCase(cat)) {
+                        alreadyExists = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyExists) {
+                    uniqueCategories[catIndex++] = cat;
+                    System.out.println(BLUECOLOR + "→ " + RESETCOLOR + cat);
+                }
             }
+
             getInput.nextLine();
             String Choice = getInput.nextLine();
 
+            int count = 0;
             System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
             System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
                     "No", "Amount", "Description", "Category", "Date");
             System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
 
             for (int i = 0; i < expenselist.length; i++) {
-                if (expenselist[i] != null && Choice.equalsIgnoreCase(expenselist[i].Category)) {
+                if (expenselist[i] != null &&
+                        expenselist[i].Category.trim().equalsIgnoreCase(Choice)) {
+                    count++;
                     System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
-                            (i + 1),
+                            count,
                             expenselist[i].Amount,
                             expenselist[i].Description,
                             expenselist[i].Category,
                             expenselist[i].Date);
                 }
             }
+
+            if (count == 0) {
+                System.out.println(REDCOLOR + "No expenses found in selected category." + RESETCOLOR);
+            }
+
             System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
         } else {
-            System.out.println(REDCOLOR + "List is Empty,Enter some Expenses first" + RESETCOLOR);
+            System.out.println(REDCOLOR + "List is Empty, Enter some Expenses first." + RESETCOLOR);
         }
     }
 
     private static void FilterByDate() {
-        getInput.nextLine();
-        System.out.print(BLUECOLOR + RESETCOLOR + " Enter Date (dd-mm-yyyy) to filter: ");
-        String dateInput = getInput.nextLine();
-
-        int num = 0;
-        boolean found = false;
-
-        for (int i = 0; i < expenselist.length; i++) {
-            if (expenselist[i] != null && expenselist[i].Date.equals(dateInput)) {
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            System.out.println(REDCOLOR + "No expenses found on " + dateInput + RESETCOLOR);
-        } else {
-            System.out.println(PURPLECOLOR);
-            System.out.println("╔════════════════════════════════════════════════════════════╗");
-            System.out.printf("║                  Expenses On " + dateInput + "                    ║");
-            System.out.println("\n╚════════════════════════════════════════════════════════════╝" + RESETCOLOR);
-
-            System.out.println("╔══════╦══════════╦══════════════════╦══════════╦════════════╗");
-            System.out.printf("║ %-4s ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
-                    "No", "Amount", "Description", "Category", "Date");
-            System.out.println("╠══════╬══════════╬══════════════════╬══════════╬════════════╣");
-
-            for (int i = 0; i < expenselist.length; i++) {
-                if (expenselist[i] != null && expenselist[i].Date.equals(dateInput)) {
-                    num++;
-                    System.out.printf("║ %-4d ║ %-8.2f ║ %-16s ║ %-8s ║ %-10s ║%n",
-                            num,
-                            expenselist[i].Amount,
-                            expenselist[i].Description,
-                            expenselist[i].Category,
-                            expenselist[i].Date);
-                }
-            }
-
-            System.out.println("╚══════╩══════════╩══════════════════╩══════════╩════════════╝");
-        }
         getInput.nextLine();
         System.out.print(BLUECOLOR + "(→) " + RESETCOLOR + " Enter Date (dd-mm-yyyy) to filter: ");
         String inputDate = getInput.nextLine();
@@ -294,7 +280,7 @@ public class Main {
             for (int i = 0; i < expenselist.length; i++) {
                 if (expenselist[i] != null && expenselist[i].Date.equals(inputDate)) {
                     count++;
-                    System.out.printf("║ %-4d ║ %-8d ║ %-16s ║ %-8s ║ %-10s ║%n",
+                    System.out.printf("║ %-4d ║ %-8s ║ %-16s ║ %-8s ║ %-10s ║%n",
                             count,
                             expenselist[i].Amount,
                             expenselist[i].Description,
@@ -348,6 +334,7 @@ public class Main {
             }
         }
     }
+
     private static void TotalExpense() {
         int total = 0;
 
