@@ -155,7 +155,6 @@ public class Main {
 
     private static void DeleteExpense() {
 
-
         if (expenselist[0] == null) {
             System.out.println(REDCOLOR + "No expenses to delete." + RESETCOLOR);
             return;
